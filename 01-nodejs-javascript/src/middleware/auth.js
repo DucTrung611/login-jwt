@@ -14,6 +14,12 @@ const auth = (req, res, next) => {
             //verify
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET)
+                req.user = {
+                    email: decoded.email,
+                    name: decoded.name,
+                    role: decoded.role,
+                    createdBy: "hoidanit"
+                }
                 console.log(">>> decoded: ", decoded)
                 next();
             } catch (error) {

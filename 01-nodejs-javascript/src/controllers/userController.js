@@ -21,7 +21,12 @@ const getUser = async (req, res) => {
     return res.status(200).json(data)
 }
 
+const getAccount = async (req, res) => {
+
+    return res.status(200).json(req.user)
+}
+
 module.exports = {
-    createUser, handleLogin, getUser
+    createUser, handleLogin, getUser, getAccount
 
 }

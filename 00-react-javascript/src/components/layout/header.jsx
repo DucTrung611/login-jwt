@@ -14,7 +14,7 @@ const Header = () => {
             key: 'home',
             icon: <MailOutlined />,
         },
-        ...(auth.isAuthenticated ? [{
+        ...((auth.isAuthenticated && auth?.user?.role === "HOIDANIT") ? [{
             label: <Link to={"/user"}>User</Link>,
             key: 'user',
             icon: <MailOutlined />,
