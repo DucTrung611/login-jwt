@@ -22,4 +22,46 @@ const getUserAPI = () => {
     return axios.get(URL_API)
 }
 
-export { createUserApi, loginApi, getUserAPI }
+const getStockAPI = () => {
+    const URL_API = "/v1/api/get"
+
+    return axios.get(URL_API)
+}
+
+const updateUserAPI = (_id, fullName, phone,) => {
+    const URL_BACKEND = "/api/v1/user";
+    const data = {
+        _id: _id,
+        fullName: fullName,
+        phone: phone,
+    }
+    return axios.put(URL_BACKEND, data);
+}
+
+const updateStockAPI = (_id, stt,
+    ma,
+    giahientai,
+    giangungmua,
+    giacannhacban,
+    cotuc,
+    suatcotuc,
+    tangtruonglnkyvong,
+    muctangtruongtonghangnam,
+    ghichu) => {
+    const URL_BACKEND = "/v1/api/update";
+    const data = {
+        _id: _id,
+        stt: stt,
+        ma: ma,
+        giahientai: giahientai,
+        giangungmua: giangungmua,
+        giacannhacban: giacannhacban,
+        cotuc: cotuc,
+        suatcotuc: suatcotuc,
+        tangtruonglnkyvong: tangtruonglnkyvong,
+        muctangtruongtonghangnam: muctangtruongtonghangnam,
+        ghichu: ghichu,
+    }
+    return axios.put(URL_BACKEND, data);
+}
+export { createUserApi, loginApi, getUserAPI, getStockAPI, updateUserAPI, updateStockAPI }

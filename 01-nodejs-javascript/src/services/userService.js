@@ -22,7 +22,7 @@ const createUserService = async (name, email, password) => {
             name: name,
             email: email,
             password: hashPassword,
-            role: "HOIDANIT"
+            role: "USER"
         })
         return result;
 
