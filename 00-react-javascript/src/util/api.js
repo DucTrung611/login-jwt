@@ -64,4 +64,12 @@ const updateStockAPI = (_id, stt,
     }
     return axios.put(URL_BACKEND, data);
 }
-export { createUserApi, loginApi, getUserAPI, getStockAPI, updateUserAPI, updateStockAPI }
+
+const getFinancialDataBySymbol = (symbol) => {
+    const URL_BACKEND = "/v1/api/getdata";
+    const data = {
+        symbol: symbol,
+    }
+    return axios.post(URL_BACKEND, data);
+}
+export { createUserApi, loginApi, getUserAPI, getStockAPI, updateUserAPI, updateStockAPI, getFinancialDataBySymbol }

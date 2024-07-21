@@ -13,6 +13,14 @@ const StockPage = () => {
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const { auth, setAuth } = useContext(AuthContext);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
+    const handleTableChange = (pagination) => {
+        setCurrentPage(pagination.current);
+        setPageSize(pagination.pageSize);
+    };
+
     useEffect(() => {
         const fetchStock = async () => {
             const res = await getStockAPI();
@@ -26,7 +34,6 @@ const StockPage = () => {
             }
         }
         fetchStock();
-        console.log(">>>auth.user.role", auth.user.role)
     }, [])
 
     const columns = [
@@ -37,7 +44,10 @@ const StockPage = () => {
         },
         {
             title: 'STT',
-            dataIndex: 'stt',
+            dataIndex: 'stt1',
+            render: (text, record, index) => {
+                return (currentPage - 1) * pageSize + index + 1;
+            }
         },
         {
             title: 'Mã',
@@ -128,7 +138,9 @@ const StockPage = () => {
 
     ];
     return (
-        <div> <Table dataSource={dataSource} columns={columns} bordered rowKey={"_id"} />
+        <div> <Table dataSource={dataSource} columns={columns} bordered rowKey={"_id"} pagination={{ current: currentPage, pageSize: pageSize }} onChange={handleTableChange}
+
+        />
             <UpdateStockModal
                 isModalUpdateOpen={isModalUpdateOpen}
                 setIsModalUpdateOpen={setIsModalUpdateOpen}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input, notification, Modal } from "antd";
-import { updateStockAPI, updateUserAPI } from "../util/api";
+import { getStockAPI, updateStockAPI, updateUserAPI } from "../util/api";
 
 const UpdateStockModal = (props) => {
     const [id, setId] = useState("");
@@ -20,7 +20,7 @@ const UpdateStockModal = (props) => {
 
     const { isModalUpdateOpen, setIsModalUpdateOpen,
         dataUpdate, setDataUpdate,
-        loadUser
+
     } = props;
 
     //next dataUpdate != prev dataUpdate
@@ -42,7 +42,18 @@ const UpdateStockModal = (props) => {
             setGhichu(dataUpdate.ghichu);
         }
     }, [dataUpdate])
+    const loadStock = async () => {
+        const res = await getStockAPI();
+        if (!res?.message) {
+            setDataSource(res.stocks);
+        } else {
+            notification.error({
+                message: "unauthorized",
+                description: res.message
+            })
+        }
 
+    }
     const handleSubmitBtn = async () => {
         const res = await updateStockAPI(
             id,
@@ -57,18 +68,17 @@ const UpdateStockModal = (props) => {
             muctangtruongtonghangnam,
             ghichu);
         console.log(">>res: ", res.data)
-        if (!res.data) {
+        if (res.success) {
             notification.success({
                 message: "Update user",
                 description: "Cập nhât thành công"
             })
-            // resetAndCloseModal();
-            // await loadUser();
-
+            resetAndCloseModal();
+            loadStock();
         } else {
             notification.error({
                 message: "Error update user",
-                // description: JSON.stringify(res.message)
+                description: JSON.stringify(res.message)
             })
         }
     }
@@ -87,6 +97,7 @@ const UpdateStockModal = (props) => {
         setMuctangtruongtonghangnam("");
         setGhichu("");
         setDataUpdate(null);
+        fetchStock();
     }
 
 
@@ -113,6 +124,7 @@ const UpdateStockModal = (props) => {
                     <Input
                         value={stt}
                         onChange={(event) => { setStt(event.target.value) }}
+                        disabled
                     />
                 </div>
 
@@ -121,6 +133,7 @@ const UpdateStockModal = (props) => {
                     <Input
                         value={ma}
                         onChange={(event) => { setMa(event.target.value) }}
+                        disabled
                     />
                 </div>
 
@@ -129,6 +142,7 @@ const UpdateStockModal = (props) => {
                     <Input
                         value={giahientai}
                         onChange={(event) => { setGiahientai(event.target.value) }}
+                        disabled
                     />
                 </div>
 
