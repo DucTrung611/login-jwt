@@ -6,24 +6,20 @@ import { useEffect, useState } from 'react';
 const HomePage = () => {
 
 
-    const [dataSource, setDataSource] = useState([])
+    const [dataSource, setDataSource] = useState({})
 
     useEffect(() => {
         const fetchDataStock = async () => {
             const res = await getFinancialDataBySymbol("HPG");
-            // console.log("res: ", res.data)
+            console.log("res: ", res.data)
             if (res) {
                 setDataSource(res.data);
-                console.log("dataSource: ", dataSource)
-
-            } else {
-
             }
         }
         fetchDataStock();
     }, [])
 
-
+    console.log("dataSource: ", dataSource)
     return (
         <div style={{ padding: 20 }}>
             <Result
